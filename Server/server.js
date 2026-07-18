@@ -41,9 +41,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// ===== REMOVED: app.options('*', cors(corsOptions)); =====
-// This line is no longer needed and causes errors.
-
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
