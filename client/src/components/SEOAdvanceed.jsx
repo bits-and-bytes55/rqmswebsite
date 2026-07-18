@@ -24,8 +24,7 @@ const SEOAdvanced = ({
   // 🔥 FIX: Get SEO data from config
   const seoData = SEO_CONFIG.getSEOData(currentPath);
 
-  console.log("🔍 SEOAdvanced - Path:", currentPath);
-  console.log("🔍 SEOAdvanced - Config Data:", seoData);
+  
 
   // Use props or config data
   const finalTitle = title || seoData.title;

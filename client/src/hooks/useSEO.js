@@ -72,8 +72,7 @@ export const useSEO = (customData = {}) => {
     updateOGTag('og:url', finalData.canonical);
     updateOGTag('og:type', finalData.ogType || 'website');
     
-    console.log('✅ SEO Updated for:', path);
-    console.log('🔗 Canonical URL:', finalData.canonical);
+    
     
     // Cleanup function (optional)
     return () => {

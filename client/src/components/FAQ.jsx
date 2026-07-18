@@ -133,7 +133,7 @@ const FAQ = () => {
   }));
 
   return (
-    <section className="py-16 md:py-24 bg-white overflow-hidden">
+    <section className="py-6 md:py-14 bg-white overflow-hidden">
       <div className="container mx-auto px-5">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

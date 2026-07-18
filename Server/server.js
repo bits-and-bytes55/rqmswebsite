@@ -6,11 +6,11 @@ require("dotenv").config();
 
 const app = express();
 
-
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
   'http://localhost:5173',
+  'https://rqmseconsultancyservices.com',
   'http://localhost:5174',
   'http://127.0.0.1:3000',
   'http://127.0.0.1:5173',
@@ -21,7 +21,6 @@ const allowedOrigins = [
   'https://your-app-name.vercel.app',
   'https://your-app-name.firebaseapp.com',
   'https://your-app-name.onrender.com',
-  
 ];
 
 const corsOptions = {
@@ -31,7 +30,6 @@ const corsOptions = {
     if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
       callback(null, true);
     } else {
-      console.log('Blocked origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -43,7 +41,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.options('*', cors(corsOptions));
+// ===== REMOVED: app.options('*', cors(corsOptions)); =====
+// This line is no longer needed and causes errors.
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -211,9 +210,6 @@ app.post("/api/send-enquiry", async (req, res) => {
       transporter.sendMail(userMailOptions)
     ]);
 
-    console.log(`✅ Enquiry sent from ${email}`);
-    console.log(`📧 Auto-reply sent to ${email}`);
-
     res.status(200).json({
       success: true,
       message: "Enquiry sent successfully! We'll get back to you within 24 hours."
@@ -244,7 +240,7 @@ app.use((req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {
   console.log(`\n🚀 Server running on http://localhost:${PORT}`);
   console.log(`📧 Email service ready`);

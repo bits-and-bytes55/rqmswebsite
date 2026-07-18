@@ -283,6 +283,7 @@ const ServiceManpower = () => {
           </div>
         </section>
 
+        
         {/* ═══ INTRO + IMAGE ═══ */}
         <section className="mx-auto px-6 py-20">
           <div className="grid md:grid-cols-2 gap-16 items-center">

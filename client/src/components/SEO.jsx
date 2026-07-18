@@ -27,9 +27,7 @@ const SEO = ({
   // 🔥 FIX: Get SEO data from config
   const seoData = SEO_CONFIG.getSEOData(currentPath);
 
-  console.log("📍 Current Path:", currentPath);
-  console.log("🔍 SEO Data:", seoData);
-  console.log("🔗 Canonical from config:", seoData.canonical);
+  
 
   // Use props if provided, otherwise use config data
   const finalTitle = title || seoData.title;

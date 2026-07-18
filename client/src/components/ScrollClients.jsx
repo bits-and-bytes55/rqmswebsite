@@ -20,7 +20,7 @@ const loopClients = [...clients, ...clients];
 
 export default function ScrollClients() {
   return (
-    <section className="py-16 bg-gray-50 border-b border-gray-200 overflow-hidden">
+    <section className="py-16 px-4 bg-gray-50 border-b border-gray-200 overflow-hidden">
       <div className="mx-auto px-5 sm:px-8 max-w-7xl">
         {/* Header - Matches KP Reliable style */}
         <motion.div

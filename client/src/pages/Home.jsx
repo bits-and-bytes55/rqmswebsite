@@ -423,9 +423,12 @@ const Home = () => {
   }, []);
 
   return (
-    <>
+    // w-full + overflow-x-hidden + max-w-[100vw] on the root wrapper stops the
+    // page from ever growing wider than the viewport (this is what was causing
+    // the horizontal scrollbar / blank strip on the right on small screens).
+    <div className="w-full max-w-[100vw] overflow-x-hidden">
       <SEOAdvanced />
-      <section className="relative  flex items-center overflow-hidden bg-indigo-950">
+      <section className="relative flex items-center overflow-hidden bg-indigo-950 w-full">
         {/* Background carousel */}
         <AnimatePresence mode="wait">
           <motion.div
@@ -440,29 +443,32 @@ const Home = () => {
         </AnimatePresence>
         <div className="absolute inset-0" />
 
-        {/* Decorative blobs */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-600/15 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+        {/* Decorative blobs — clipped by the section's overflow-hidden, but
+            capped with max-w so they can't force horizontal scroll either */}
+        <div className="absolute top-0 right-0 w-[300px] sm:w-[450px] md:w-[600px] h-[300px] sm:h-[450px] md:h-[600px] max-w-[70vw] bg-indigo-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[220px] sm:w-[300px] md:w-[400px] h-[220px] sm:h-[300px] md:h-[400px] max-w-[60vw] bg-purple-600/15 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
 
-        <div className="relative z-10 w-full  mx-auto px-5 sm:px-8 py-20 md:py-30">
+        <div className="relative z-10 w-full mx-auto px-5 sm:px-8 py-16 sm:py-20 md:py-30">
           <div className="">
             {/* Eyebrow */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-amber-300 text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full mb-6"
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-amber-300 text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full mb-6 max-w-full"
             >
-              <Star size={12} fill="currentColor" />
-              Trusted Reliable QMS Expert & Consultancy Services — Gurugram,
-              India
+              <Star size={12} fill="currentColor" className="flex-shrink-0" />
+              <span className="leading-snug">
+                Trusted Reliable QMS Expert & Consultancy Services — Gurugram,
+                India
+              </span>
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-white text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight"
+              className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight break-words"
             >
               Empowering Your Business
               <br />
@@ -479,7 +485,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="text-indigo-200 text-lg md:text-xl mt-5 leading-relaxed max-w-2xl"
+              className="text-indigo-200 text-base sm:text-lg md:text-xl mt-5 leading-relaxed max-w-2xl"
             >
               From workforce solutions to ISO certification — we deliver
               end-to-end consultancy that strengthens your operations and builds
@@ -490,7 +496,7 @@ const Home = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.35 }}
-              className="text-indigo-300/80 text-sm lg:text-lg mt-3 tracking-wide text-bold"
+              className="text-indigo-300/80 text-sm lg:text-lg mt-3 tracking-wide font-bold"
             >
               Manpower Service &nbsp;·&nbsp; Placement Service &nbsp;·&nbsp; QMS
               & Audit Service&nbsp;·&nbsp; Training/Development & Certification
@@ -504,7 +510,7 @@ const Home = () => {
             >
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2.5 bg-gradient-to-r from-yellow-400 to-amber-400 text-gray-900 font-bold py-3.5 px-8 rounded-full shadow-lg shadow-yellow-500/25 hover:shadow-yellow-500/40 hover:scale-105 transition-all duration-200 no-underline text-sm sm:text-base"
+                className="inline-flex items-center gap-2.5 bg-gradient-to-r from-yellow-400 to-amber-400 text-gray-900 font-bold py-3.5 px-6 sm:px-8 rounded-full shadow-lg shadow-yellow-500/25 hover:shadow-yellow-500/40 hover:scale-105 transition-all duration-200 no-underline text-sm sm:text-base"
               >
                 Get a Free Consultation
                 <ArrowRight size={16} />
@@ -513,7 +519,7 @@ const Home = () => {
                 href="https://wa.me/917042322362?text=Hello%2C%20I%20would%20like%20a%20consultation."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 bg-green-500 hover:bg-green-400 text-white font-semibold py-3.5 px-7 rounded-full transition-all duration-200 hover:scale-105 no-underline text-sm sm:text-base shadow-lg shadow-green-600/20"
+                className="inline-flex items-center gap-2.5 bg-green-500 hover:bg-green-400 text-white font-semibold py-3.5 px-6 sm:px-7 rounded-full transition-all duration-200 hover:scale-105 no-underline text-sm sm:text-base shadow-lg shadow-green-600/20"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -557,7 +563,7 @@ const Home = () => {
       {/* ═══════════════════════════════════
           SERVICES — HIGHLIGHTED
       ═══════════════════════════════════ */}
-      <section className="py-20 md:py-28 bg-gray-50" id="services">
+      <section className="py-10 md:py-18 bg-gray-50" id="services">
         <div className="mx-auto px-5 sm:px-8">
           <motion.div
             initial="hidden"
@@ -570,11 +576,11 @@ const Home = () => {
             <span className="inline-block bg-indigo-100 text-indigo-700 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
               What We Do
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
               Our Core Services.{" "}
               <span className="text-indigo-600">One Partner.</span>
             </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+            <p className="text-gray-500 max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed px-2">
               Whether you need people, processes, or performance improvement —
               we have a proven solution designed for your industry.
             </p>
@@ -596,12 +602,12 @@ const Home = () => {
                 >
                   {/* Color accent panel */}
                   <div
-                    className={`lg:w-72 xl:w-80 flex-shrink-0 bg-gradient-to-br ${tk.gradient} flex flex-col items-center justify-center p-10 text-white`}
+                    className={`lg:w-72 xl:w-80 flex-shrink-0 bg-gradient-to-br ${tk.gradient} flex flex-col items-center justify-center p-8 sm:p-10 text-white`}
                   >
-                    <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mb-5 backdrop-blur-sm">
-                      <Icon size={40} className="text-white" />
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 rounded-2xl flex items-center justify-center mb-5 backdrop-blur-sm">
+                      <Icon size={36} className="text-white sm:w-10 sm:h-10" />
                     </div>
-                    <h3 className="text-2xl font-extrabold text-center leading-tight">
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-center leading-tight">
                       {service.title}
                     </h3>
                     <p className="text-white/80 text-sm text-center mt-2 italic">
@@ -616,8 +622,8 @@ const Home = () => {
                   </div>
 
                   {/* Content panel */}
-                  <div className="flex-1 p-8 md:p-10 flex flex-col justify-center">
-                    <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
+                  <div className="flex-1 p-6 sm:p-8 md:p-10 flex flex-col justify-center min-w-0">
+                    <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed mb-6">
                       {service.desc}
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -645,7 +651,7 @@ const Home = () => {
       {/* ═══════════════════════════════════
           HOW WE WORK
       ═══════════════════════════════════ */}
-      <section className="py-20 md:py-28 bg-white">
+      <section className="py-10 md:py-18 bg-white">
         <div className="mx-auto px-5 sm:px-8">
           <motion.div
             initial="hidden"
@@ -658,10 +664,10 @@ const Home = () => {
             <span className="inline-block bg-indigo-100 text-indigo-700 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
               Our Process
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
               How We Work
             </h2>
-            <p className="text-gray-500 max-w-xl mx-auto text-base md:text-lg">
+            <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base md:text-lg px-2">
               A structured, transparent engagement from first conversation to
               final delivery.
             </p>
@@ -703,9 +709,9 @@ const Home = () => {
       {/* ═══════════════════════════════════
           OUR STORY
       ═══════════════════════════════════ */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+      <section className="py-10 md:py-18 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
         <div className="mx-auto px-5 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -716,11 +722,11 @@ const Home = () => {
               <span className="inline-block bg-indigo-100 text-indigo-700 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5">
                 Who We Are
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
                 Our Story
               </h2>
               <div className="w-16 h-1 bg-yellow-400 mb-6 rounded-full" />
-              <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-5">
+              <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed mb-5">
                 Founded in 2026 by{" "}
                 <strong className="text-gray-800">Amir Singh</strong>, Reliable
                 QMS Expert & Consultancy Services was built on a simple belief:
@@ -728,7 +734,7 @@ const Home = () => {
                 the way businesses operate every day — not confined to a shelf
                 of documents that no one reads.
               </p>
-              <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-5">
+              <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed mb-5">
                 In the early years, we focused primarily on QMS documentation
                 established,implement, audit and sustain Quality Management
                 Systems and ISO 9001: 2015 /IATF 16949:2016/ISO 45001:2018 ·
@@ -738,7 +744,7 @@ const Home = () => {
                 sourcing, training for their teams, supplier audits, and
                 eventually full placement services.
               </p>
-              <p className="text-gray-600 text-base md:text-lg leading-relaxed">
+              <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed">
                 Today, we are a multi-service consultancy with a growing network
                 of industry professionals, auditors, and trainers. Our
                 headquarters is in Gurugram, but our clients span across India.
@@ -785,13 +791,13 @@ const Home = () => {
                 return (
                   <div
                     key={i}
-                    className={`${tk.bg} rounded-2xl p-6 flex flex-col items-center text-center border ${tk.border}`}
+                    className={`${tk.bg} rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center border ${tk.border}`}
                   >
                     <Ic size={28} className={`${tk.text} mb-3`} />
-                    <span className={`text-3xl font-extrabold ${tk.text}`}>
+                    <span className={`text-2xl sm:text-3xl font-extrabold ${tk.text}`}>
                       {value}
                     </span>
-                    <span className="text-gray-500 text-sm mt-1 font-medium">
+                    <span className="text-gray-500 text-xs sm:text-sm mt-1 font-medium">
                       {label}
                     </span>
                   </div>
@@ -805,7 +811,7 @@ const Home = () => {
       {/* ═══════════════════════════════════
           MISSION & VISION
       ═══════════════════════════════════ */}
-      <section className="py-20 md:py-28 bg-white">
+      <section className="py-10 md:py-18 bg-white">
         <div className="mx-auto px-5 sm:px-8">
           <motion.div
             initial="hidden"
@@ -818,7 +824,7 @@ const Home = () => {
             <span className="inline-block bg-indigo-100 text-indigo-700 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
               Our Direction
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900">
               Mission & Vision
             </h2>
           </motion.div>
@@ -848,17 +854,17 @@ const Home = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: i * 0.15 }}
                   viewport={{ once: true }}
-                  className={`bg-white rounded-3xl border-2 ${tk.border} shadow-sm hover:shadow-lg transition-all duration-300 p-8 md:p-10`}
+                  className={`bg-white rounded-3xl border-2 ${tk.border} shadow-sm hover:shadow-lg transition-all duration-300 p-6 sm:p-8 md:p-10`}
                 >
                   <div
-                    className={`w-16 h-16 ${tk.bg} rounded-2xl flex items-center justify-center mb-6`}
+                    className={`w-14 h-14 sm:w-16 sm:h-16 ${tk.bg} rounded-2xl flex items-center justify-center mb-6`}
                   >
-                    <Ic size={32} className={tk.text} />
+                    <Ic size={30} className={tk.text} />
                   </div>
-                  <h3 className="text-2xl font-extrabold text-gray-900 mb-4">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 mb-4">
                     {title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed mb-4">{desc}</p>
+                  <p className="text-gray-600 leading-relaxed mb-4 text-sm sm:text-base">{desc}</p>
                   <p className={`text-sm font-semibold ${tk.text} italic`}>
                     {sub}
                   </p>
@@ -872,7 +878,7 @@ const Home = () => {
       {/* ═══════════════════════════════════
           WHY CHOOSE RQMS
       ═══════════════════════════════════ */}
-      <section className="py-20 md:py-28 bg-gray-50">
+      <section className="py-10 md:py-18 bg-gray-50">
         <div className="mx-auto px-5 sm:px-8">
           <motion.div
             initial="hidden"
@@ -885,10 +891,10 @@ const Home = () => {
             <span className="inline-block bg-indigo-100 text-indigo-700 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
               Why Us
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
               Why Choose RQMS?
             </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto text-base md:text-lg">
+            <p className="text-gray-500 max-w-2xl mx-auto text-sm sm:text-base md:text-lg px-2">
               There are many consultancies. Here is what makes our approach
               different in practice.
             </p>
@@ -904,7 +910,7 @@ const Home = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.45, delay: idx * 0.08 }}
                   viewport={{ once: true }}
-                  className="bg-white rounded-2xl p-7 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 group hover:border-indigo-200"
+                  className="bg-white rounded-2xl p-6 sm:p-7 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 group hover:border-indigo-200"
                 >
                   <div className="w-12 h-12 bg-indigo-50 group-hover:bg-indigo-600 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300">
                     <Icon
@@ -928,7 +934,7 @@ const Home = () => {
       {/* ═══════════════════════════════════
           INDUSTRIES WE SERVE
       ═══════════════════════════════════ */}
-      <section className="py-20 md:py-24 bg-indigo-950 overflow-hidden">
+      <section className="py-10 md:py-14 bg-indigo-950 overflow-hidden">
         <div className="mx-auto px-5 sm:px-8">
           <motion.div
             initial="hidden"
@@ -941,10 +947,10 @@ const Home = () => {
             <span className="inline-block bg-white/10 text-indigo-200 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
               Sectors
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-4">
               Industries We Serve
             </h2>
-            <p className="text-indigo-300 max-w-xl mx-auto text-base md:text-lg">
+            <p className="text-indigo-300 max-w-xl mx-auto text-sm sm:text-base md:text-lg px-2">
               Our solutions are applied across a wide range of sectors — each
               with its own compliance pressures, workforce dynamics, and quality
               standards.
@@ -974,7 +980,7 @@ const Home = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
-            className="text-center text-indigo-300/70 text-sm mt-8"
+            className="text-center text-indigo-300/70 text-sm mt-8 px-2"
           >
             Don't see your sector? We work across many more industries.{" "}
             <Link
@@ -991,7 +997,7 @@ const Home = () => {
       {/* ═══════════════════════════════════
           CORE VALUES
       ═══════════════════════════════════ */}
-      <section className="py-20 md:py-28 bg-white">
+      <section className="py-10 md:py-18 bg-white">
         <div className="mx-auto px-5 sm:px-8">
           <motion.div
             initial="hidden"
@@ -1004,10 +1010,10 @@ const Home = () => {
             <span className="inline-block bg-indigo-100 text-indigo-700 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
               What We Stand For
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
               Our Core Values
             </h2>
-            <p className="text-gray-500 max-w-xl mx-auto text-base md:text-lg">
+            <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base md:text-lg px-2">
               These are not aspirational statements — they shape how we plan,
               communicate, and deliver in every engagement.
             </p>
@@ -1024,7 +1030,7 @@ const Home = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.45, delay: idx * 0.1 }}
                   viewport={{ once: true }}
-                  className={`rounded-2xl p-7 border-2 ${tk.border} ${tk.bg} hover:shadow-lg transition-all duration-300 group`}
+                  className={`rounded-2xl p-6 sm:p-7 border-2 ${tk.border} ${tk.bg} hover:shadow-lg transition-all duration-300 group`}
                 >
                   <div
                     className={`w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-5 shadow-sm`}
@@ -1047,7 +1053,7 @@ const Home = () => {
       {/* ═══════════════════════════════════
           MEET THE TEAM
       ═══════════════════════════════════ */}
-      <section className="py-20 md:py-28 bg-gray-50">
+      <section className="py-10 md:py-18 bg-gray-50">
         <div className="mx-auto px-5 sm:px-8">
           <motion.div
             initial="hidden"
@@ -1060,10 +1066,10 @@ const Home = () => {
             <span className="inline-block bg-indigo-100 text-indigo-700 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
               The Team
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
               Meet the People Behind RQMS
             </h2>
-            <p className="text-gray-500 max-w-xl mx-auto text-base md:text-lg">
+            <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base md:text-lg px-2">
               A seasoned team of engineers, auditors, trainers, and managers —
               united by a commitment to quality.
             </p>
@@ -1079,15 +1085,15 @@ const Home = () => {
           >
             <div className="flex flex-col lg:flex-row">
               {/* Left — photo + name */}
-              <div className="lg:w-72 xl:w-80 flex-shrink-0 flex flex-col items-center justify-center p-10 bg-white/10 backdrop-blur-sm">
-                <div className="w-32 h-32 rounded-2xl overflow-hidden border-4 border-white/30 shadow-xl mb-5">
+              <div className="lg:w-72 xl:w-80 flex-shrink-0 flex flex-col items-center justify-center p-6 sm:p-10 bg-white/10 backdrop-blur-sm">
+                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-4 border-white/30 shadow-xl mb-5">
                   <img
                     src={director.image}
                     alt={director.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-2xl font-extrabold text-white text-center">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-white text-center">
                   {director.name}
                 </h3>
                 <span className="mt-2 inline-block bg-yellow-400 text-gray-900 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full">
@@ -1105,8 +1111,8 @@ const Home = () => {
               </div>
 
               {/* Right — details */}
-              <div className="flex-1 p-8 md:p-10 flex flex-col justify-center">
-                <p className="text-indigo-100 text-base md:text-lg leading-relaxed mb-6">
+              <div className="flex-1 p-6 sm:p-8 md:p-10 flex flex-col justify-center min-w-0">
+                <p className="text-indigo-100 text-sm sm:text-base md:text-lg leading-relaxed mb-6">
                   {director.bio}
                 </p>
 
@@ -1144,15 +1150,15 @@ const Home = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: idx * 0.07 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 p-6 flex items-start gap-5 border border-gray-100 group hover:border-indigo-200"
+                className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 p-5 sm:p-6 flex items-start gap-4 sm:gap-5 border border-gray-100 group hover:border-indigo-200"
               >
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-28 h-28 rounded-xl object-cover border-2 border-indigo-100 group-hover:border-indigo-300 transition-all duration-300 flex-shrink-0"
+                  className="w-20 h-20 sm:w-28 sm:h-28 rounded-xl object-cover border-2 border-indigo-100 group-hover:border-indigo-300 transition-all duration-300 flex-shrink-0"
                 />
                 <div className="min-w-0">
-                  <h4 className="text-base font-bold text-gray-800 truncate">
+                  <h4 className="text-sm sm:text-base font-bold text-gray-800 truncate">
                     {member.name}
                   </h4>
                   <p className="text-xs text-indigo-600 font-semibold mt-0.5">
@@ -1164,7 +1170,7 @@ const Home = () => {
                         size={12}
                         className="text-gray-400 mt-0.5 flex-shrink-0"
                       />
-                      <span className="text-xs text-gray-500 leading-snug">
+                      <span className="text-xs text-gray-500 leading-snug break-words">
                         {member.qualification}
                       </span>
                     </div>
@@ -1205,7 +1211,7 @@ const Home = () => {
               href="tel:+917042322362"
               className="flex items-center gap-3 no-underline group"
             >
-              <div className="w-12 h-12 bg-indigo-50 group-hover:bg-indigo-100 rounded-xl flex items-center justify-center transition">
+              <div className="w-12 h-12 bg-indigo-50 group-hover:bg-indigo-100 rounded-xl flex items-center justify-center transition flex-shrink-0">
                 <Phone size={20} className="text-indigo-600" />
               </div>
               <div>
@@ -1218,16 +1224,16 @@ const Home = () => {
             <div className="hidden sm:block w-px h-12 bg-gray-200" />
             <a
               href="mailto:amirsinghdirector@rqmseconsultancyservices.com"
-              className="flex items-center gap-3 no-underline group"
+              className="flex items-center gap-3 no-underline group max-w-full"
             >
-              <div className="w-12 h-12 bg-indigo-50 group-hover:bg-indigo-100 rounded-xl flex items-center justify-center transition">
+              <div className="w-12 h-12 bg-indigo-50 group-hover:bg-indigo-100 rounded-xl flex items-center justify-center transition flex-shrink-0">
                 <Mail size={20} className="text-indigo-600" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
                   Email Us
                 </p>
-                <p className="text-gray-800 font-bold">
+                <p className="text-gray-800 font-bold text-sm sm:text-base break-all sm:break-normal">
                   amirsinghdirector@rqmseconsultancyservices.com
                 </p>
               </div>
@@ -1239,7 +1245,7 @@ const Home = () => {
               rel="noopener noreferrer"
               className="flex items-center gap-3 no-underline group"
             >
-              <div className="w-12 h-12 bg-green-50 group-hover:bg-green-100 rounded-xl flex items-center justify-center transition">
+              <div className="w-12 h-12 bg-green-50 group-hover:bg-green-100 rounded-xl flex items-center justify-center transition flex-shrink-0">
                 <svg
                   viewBox="0 0 24 24"
                   fill="currentColor"
@@ -1274,15 +1280,15 @@ const Home = () => {
         className="py-8 pb-16 bg-white"
       >
         <div className="mx-auto px-5 sm:px-8">
-          <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 rounded-3xl p-10 md:p-16 text-center overflow-hidden shadow-2xl shadow-indigo-500/25">
+          <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 rounded-3xl p-8 sm:p-10 md:p-16 text-center overflow-hidden shadow-2xl shadow-indigo-500/25">
             {/* Decorative circles */}
-            <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-48 sm:w-72 h-48 sm:h-72 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-32 sm:w-48 h-32 sm:h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4 pointer-events-none" />
 
-            <h2 className="text-white text-3xl md:text-5xl font-extrabold relative z-10 leading-tight">
+            <h2 className="text-white text-2xl sm:text-3xl md:text-5xl font-extrabold relative z-10 leading-tight">
               Ready to Elevate Your Business?
             </h2>
-            <p className="text-indigo-200 text-base md:text-lg max-w-2xl mx-auto mt-4 relative z-10 leading-relaxed">
+            <p className="text-indigo-200 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mt-4 relative z-10 leading-relaxed">
               Whether you need a workforce solution, an ISO audit, or a complete
               QMS overhaul — the first step is a conversation. Reach out today
               and let's find out how we can help.
@@ -1290,7 +1296,7 @@ const Home = () => {
             <div className="flex flex-wrap gap-4 justify-center mt-8 relative z-10">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3.5 px-10 rounded-full shadow-lg shadow-yellow-400/30 hover:shadow-yellow-400/50 hover:scale-105 transition-all duration-200 no-underline text-sm sm:text-base"
+                className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3.5 px-8 sm:px-10 rounded-full shadow-lg shadow-yellow-400/30 hover:shadow-yellow-400/50 hover:scale-105 transition-all duration-200 no-underline text-sm sm:text-base"
               >
                 Get Started Now <ArrowRight size={16} />
               </Link>
@@ -1306,7 +1312,7 @@ const Home = () => {
           </div>
         </div>
       </motion.section>
-    </>
+    </div>
   );
 };
 
