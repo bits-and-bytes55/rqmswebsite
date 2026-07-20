@@ -3,7 +3,7 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - main   # अगर आपकी branch master है तो master कर दें
+      - main   
 
 jobs:
   deploy:
